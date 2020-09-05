@@ -191,8 +191,11 @@ test: wasi-libc
 tinygo-test:
 	cd tests/tinygotest && tinygo test
 
-.PHONY: smoketest
+.PHONY: smoketest smoketest-commands
 smoketest:
+	@go run ./src/cmd/run-smoketest -threads 4 make smoketest-commands
+
+smoketest-commands:
 	$(TINYGO) version
 	# test all examples (except pwm)
 	$(TINYGO) build -size short -o test.hex -target=pca10040            examples/blinky1
