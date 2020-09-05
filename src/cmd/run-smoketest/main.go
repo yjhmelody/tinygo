@@ -56,7 +56,7 @@ func getMakeCommands(args []string) ([]string, error) {
 		line := scanner.Text()
 
 		fields := strings.Fields(line)
-		if fields[0] == "tinygo" && (fields[1] == "build" || fields[1] == "version") {
+		if filepath.Base(fields[0]) == "tinygo" && (fields[1] == "build" || fields[1] == "version") {
 			commands = append(commands, line)
 		} else if strings.HasPrefix(line, "#") {
 			commands = append(commands, line)
@@ -83,7 +83,7 @@ func run(commands []string, threads int) error {
 					var err error
 
 					fields := strings.Fields(command)
-					if fields[0] == "tinygo" && fields[1] == "build" {
+					if filepath.Base(fields[0]) == "tinygo" && fields[1] == "build" {
 						err = buildAndmd5sum(command, och)
 					} else if strings.HasPrefix(command, "#") {
 						och <- fmt.Sprintf("%s\n", command)
