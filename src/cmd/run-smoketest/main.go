@@ -124,6 +124,7 @@ func runCommand(command string, ch chan string) error {
 
 	err := cmd.Run()
 	if err != nil {
+		ch <- buf.String()
 		return err
 	}
 
@@ -159,11 +160,13 @@ func buildAndmd5sum(command string, ch chan string) error {
 
 	err = cmd.Run()
 	if err != nil {
+		ch <- buf.String()
 		return err
 	}
 
 	md5str, err := calcMD5(tmpOutput)
 	if err != nil {
+		ch <- buf.String()
 		return err
 	}
 	fmt.Fprintf(&buf, "%s  %s\n", md5str, output)
