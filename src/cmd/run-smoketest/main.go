@@ -145,12 +145,17 @@ func buildAndmd5sum(command string, ch chan string) error {
 	if err != nil {
 		return err
 	}
-	for i, s := range args {
-		if s == "-o" {
-			ext := filepath.Ext(args[i+1])
+	for i := range args {
+		if args[i] == "-o" {
 			output = args[i+1]
-			tmpOutput = filepath.Join(tmpdir, fmt.Sprintf("%s.%s", args[i+1], ext))
+			ext := filepath.Ext(output)
+			tmpOutput = filepath.Join(tmpdir, fmt.Sprintf("%s.%s", filepath.Base(output), ext))
 			args[i+1] = tmpOutput
+		} else if strings.HasPrefix(args[i], "-o=") {
+			output = args[i][3:]
+			ext := filepath.Ext(output)
+			tmpOutput = filepath.Join(tmpdir, fmt.Sprintf("%s.%s", filepath.Base(output), ext))
+			args[i] = fmt.Sprintf("-o=%s", tmpOutput)
 		}
 	}
 
