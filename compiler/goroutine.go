@@ -32,6 +32,9 @@ func (b *builder) createGoInstruction(funcPtr llvm.Value, params []llvm.Value, p
 		} else {
 			// The stack size is fixed at compile time. By emitting it here as a
 			// constant, it can be optimized.
+			if b.Target.DefaultStackSize == 0 {
+				b.addError(pos, "default stack size for goroutines is not set")
+			}
 			stackSize = llvm.ConstInt(b.uintptrType, b.Target.DefaultStackSize, false)
 		}
 	case "coroutines":
