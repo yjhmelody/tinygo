@@ -1470,7 +1470,7 @@ func (spi SPI) Tx(w, r []byte) error {
 	switch {
 	case w == nil:
 		// read only, so write zero and read a result.
-		spi.tx(r)
+		spi.rx(r)
 	case r == nil:
 		// write only
 		spi.tx(w)
