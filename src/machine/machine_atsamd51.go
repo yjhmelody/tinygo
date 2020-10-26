@@ -1495,6 +1495,11 @@ func (spi SPI) tx(tx []byte) {
 	}
 	for !spi.Bus.INTFLAG.HasBits(sam.SERCOM_SPIM_INTFLAG_TXC) {
 	}
+
+	// read to clear RXC register
+	for spi.Bus.INTFLAG.HasBits(sam.SERCOM_SPIM_INTFLAG_RXC) {
+		spi.Bus.DATA.Get()
+	}
 }
 
 func (spi SPI) rx(rx []byte) {
