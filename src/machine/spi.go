@@ -1,4 +1,4 @@
-// +build !baremetal sam,!atsamd51 stm32 fe310 k210
+// +build !baremetal atsamd21 stm32 fe310 k210
 
 package machine
 
