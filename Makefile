@@ -205,6 +205,7 @@ tinygo-test:
 	$(TINYGO) test hash/fnv
 	$(TINYGO) test math
 	$(TINYGO) test text/scanner
+	$(TINYGO) test unicode/utf16
 	$(TINYGO) test unicode/utf8
 
 .PHONY: smoketest
