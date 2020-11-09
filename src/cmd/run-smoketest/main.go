@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/sago35/ochan"
@@ -19,7 +20,7 @@ import (
 )
 
 func main() {
-	threads := flag.Int("threads", 4, "threads of make smoketest")
+	threads := flag.Int("threads", runtime.NumCPU(), "threads of make smoketest")
 	flag.Parse()
 
 	if len(os.Args) < 2 {

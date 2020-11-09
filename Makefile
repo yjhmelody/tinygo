@@ -193,7 +193,7 @@ tinygo-test:
 
 .PHONY: smoketest smoketest-commands
 smoketest:
-	@go run ./src/cmd/run-smoketest -threads 4 make smoketest-commands
+	@go run ./src/cmd/run-smoketest make smoketest-commands
 
 smoketest-commands:
 	$(TINYGO) version
