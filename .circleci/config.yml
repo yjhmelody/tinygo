@@ -16,7 +16,7 @@ commands:
           command: |
             echo 'deb https://apt.llvm.org/buster/ llvm-toolchain-buster-<<parameters.llvm>> main' | sudo tee /etc/apt/sources.list.d/llvm.list
             wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-            sudo apt-get update
+            sudo apt-get update --allow-releaseinfo-change
             sudo apt-get install \
                 llvm-<<parameters.llvm>>-dev \
                 clang-<<parameters.llvm>> \
