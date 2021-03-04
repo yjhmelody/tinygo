@@ -15,7 +15,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"time"
 
 	"github.com/tinygo-org/tinygo/builder"
@@ -163,10 +162,7 @@ func Test(pkgName string, options *compileopts.Options, testCompileOnly bool, ou
 			if err != nil {
 				// Propagate the exit code
 				if err, ok := err.(*exec.ExitError); ok {
-					if status, ok := err.Sys().(syscall.WaitStatus); ok {
-						os.Exit(status.ExitStatus())
-					}
-					os.Exit(1)
+					os.Exit(err.ExitCode())
 				}
 				return &commandError{"failed to run compiled binary", result.Binary, err}
 			}
@@ -1061,10 +1057,7 @@ func main() {
 		err = cmd.Run()
 		if err != nil {
 			if exitErr, ok := err.(*exec.ExitError); ok {
-				if status, ok := exitErr.Sys().(syscall.WaitStatus); ok {
-					os.Exit(status.ExitStatus())
-				}
-				os.Exit(1)
+				os.Exit(exitErr.ExitCode())
 			}
 			fmt.Fprintln(os.Stderr, "failed to run `go list`:", err)
 			os.Exit(1)
